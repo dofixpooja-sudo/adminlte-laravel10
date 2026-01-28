@@ -5,16 +5,7 @@ use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AboutController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 use App\Http\Controllers\QuestionController;
 // edit form
 Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
