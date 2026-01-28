@@ -21,7 +21,8 @@
                         <tr>
                             <td>{{ $cat->name }}</td>
                             <td><a href="{{ route('admin.category.edit', encrypt($cat->id)) }}"
-                                    class="btn btn-sm btn-primary">Edit</a></td>
+                                    class="btn btn-sm btn-primary">Edit</a>
+                            </td>
                             <td>
                                 <form action="{{ route('admin.category.destroy', encrypt($cat->id)) }}" method="POST"
                                     onsubmit="return confirm('Are sure want to delete?')">

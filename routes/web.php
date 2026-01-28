@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginWithOTPController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use App\Http\Controllers\AboutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +15,23 @@ use Illuminate\Support\Str;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\QuestionController;
+// edit form
+Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
+    ->name('questions.edit');
+
+// update
+Route::put('/questions/{id}', [QuestionController::class, 'update'])
+    ->name('questions.update');
+
+// delete
+Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])
+    ->name('questions.delete');
+Route::get('/admin/category/{id}/questions', [QuestionController::class, 'index'])
+     ->name('admin.questions.index');
+
+Route::post('/questions', [QuestionController::class, 'store']);
+
 
 Route::get('/', function () {
     $readmePath = base_path('README.md');
@@ -22,6 +40,8 @@ Route::get('/', function () {
         'readmeContent' => Str::markdown(file_get_contents($readmePath)),
     ]);
 });
+        Route::post('/about/{$id}',[AboutController::class,'about']);
+
 // Login with OTP Routes
 Route::prefix('/otp')->middleware('guest')->name('otp.')->controller(LoginWithOTPController::class)->group(function(){
     Route::get('/login','login')->name('login');
@@ -50,7 +70,7 @@ Route::prefix('oauth/')->group(function(){
 
 
 
-// Auth routes
+
 require __DIR__.'/auth.php';
-// Admin Routes
+
 require('admin.php');

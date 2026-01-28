@@ -24,6 +24,12 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right">Update</button>
+                        <a href="{{ route('admin.questions.index', $data->id) }}"class="btn btn-success float-right mr-2">
+                            Add Questions
+                        </a>
+
+
+
                         </div>
                     </form>
                 </div>
