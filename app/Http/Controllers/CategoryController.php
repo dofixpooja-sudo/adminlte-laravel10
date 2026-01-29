@@ -44,7 +44,8 @@ class CategoryController extends Controller
             'name'=>$request->name,
             'slug'=>$uniqueSlug,
         ]);
-        return redirect()->route('admin.category.index')->with('success','Category created successfully.');
+return redirect()->route('admin.category.index')
+    ->with('success', 'Category added successfully.');
     }
 
     public function edit($category)

@@ -12,7 +12,7 @@
                 <form method="POST"
                       action="{{ route('questions.update', $question->id) }}">
                     @csrf
-<input type="hidden" name="category_id" value="{{ $question->category_id }}">
+            <input type="hidden" name="category_id" value="{{ $question->category_id }}">
 
                     @method('PUT')
 

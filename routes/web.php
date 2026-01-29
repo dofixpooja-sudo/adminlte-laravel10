@@ -2,28 +2,40 @@
 
 use App\Http\Controllers\LoginWithOTPController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use App\Http\Controllers\AboutController;
 
-use App\Http\Controllers\QuestionController;
-// edit form
+// Show edit form
 Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
     ->name('questions.edit');
 
-// update
+// Update question
 Route::put('/questions/{id}', [QuestionController::class, 'update'])
     ->name('questions.update');
 
-// delete
-Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])
-    ->name('questions.delete');
-Route::get('/admin/category/{id}/questions', [QuestionController::class, 'index'])
+// Show questions for a category
+Route::get('/admin/category/{categoryId}/questions', [QuestionController::class, 'index'])
      ->name('admin.questions.index');
 
-Route::post('/questions', [QuestionController::class, 'store']);
+// Add question
+Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+
+// Edit question
+Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
+    ->name('questions.edit');
+
+// Update question
+Route::put('/questions/{id}', [QuestionController::class, 'update'])
+    ->name('questions.update');
+
+// Delete question
+Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])
+    ->name('questions.delete');
 
 
+// -------------------- HOME / ABOUT --------------------
 Route::get('/', function () {
     $readmePath = base_path('README.md');
 
@@ -31,9 +43,11 @@ Route::get('/', function () {
         'readmeContent' => Str::markdown(file_get_contents($readmePath)),
     ]);
 });
-        Route::post('/about/{$id}',[AboutController::class,'about']);
 
-// Login with OTP Routes
+Route::post('/about/{id}', [AboutController::class,'about'])->name('about.submit');
+
+
+// -------------------- LOGIN WITH OTP --------------------
 Route::prefix('/otp')->middleware('guest')->name('otp.')->controller(LoginWithOTPController::class)->group(function(){
     Route::get('/login','login')->name('login');
     Route::post('/generate','generate')->name('generate');
@@ -41,8 +55,10 @@ Route::prefix('/otp')->middleware('guest')->name('otp.')->controller(LoginWithOT
     Route::post('login/verification','loginWithOtp')->name('loginWithOtp');
 });
 
-// Socialite Routes
+
+// -------------------- SOCIALITE --------------------
 Route::prefix('oauth/')->group(function(){
+
     Route::prefix('/github/login')->name('github.')->group(function(){
         Route::get('/',[SocialiteController::class,'redirectToGithub'])->name('login');
         Route::get('/callback',[SocialiteController::class,'HandleGithubCallBack'])->name('callback');
@@ -59,9 +75,5 @@ Route::prefix('oauth/')->group(function(){
     });
 });
 
-
-
-
 require __DIR__.'/auth.php';
-
 require('admin.php');
