@@ -24,13 +24,29 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Answer Type</label>
-                            <select name="answer_type" id="answerType" class="form-control" required>
-                                <option value="">Select Type</option>
-                                <option value="text">Text Answer</option>
-                                <option value="options">Options</option>
-                            </select>
-                        </div>
+<div class="form-group">
+    <label>Answer Type</label>
+    <select name="answer_type" id="answerType" class="form-control" required>
+        <option value="">Select Type</option>
+        <option value="text">Text</option>
+        <option value="options">Options</option>
+    </select>
+</div>
+
+<div class="form-group" id="optionAnswer" style="display:none">
+    <label>Options</label>
+
+    <div id="optionsWrapper">
+        <input type="text" class="form-control mb-2" placeholder="Option 1">
+        <input type="text" class="form-control mb-2" placeholder="Option 2">
+    </div>
+
+    <button type="button" id="addMore" class="btn btn-sm btn-secondary">
+        + Add More
+    </button>
+</div>
+
+
 
                         <div class="form-group" id="textAnswer" style="display:none">
                             <label>Answer</label>
@@ -60,57 +76,55 @@
                 </div>
 
                 <div class="card-body">
-                    @forelse($questions as $q)
-                        <div class="border rounded p-3 mb-3">
-                            <strong>Q:</strong> {{ $q->question }}
+              @forelse($questions as $q)
+    <div class="border rounded p-3 mb-3">
+        <strong>Q:</strong> {{ $q->question }}
 
-                            {{-- ANSWERS DISPLAY --}}
-                            @if($q->answer_type === 'options')
-                                <ul class="mt-2">
-                                    @foreach($q->answers as $ans)
-                                        <li>{{ $ans->answer }}</li>
-                                    @endforeach
-                                </ul>
-                            @elseif($q->answer_type === 'text')
-                                @if($q->answers->count())
-                                    <p class="mt-2">
-                                        <strong>Answer:</strong> {{ $q->answers[0]->answer }}
-                                    </p>
-                                @endif
-                            @endif
+        <p class="mt-2 text-muted">
+            <strong>Answer Type:</strong> {{ ucfirst($q->answer_type) }}
+        </p>
 
-                            <div class="mt-2">
-<a href="{{ route('questions.edit', $q->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('questions.delete', $q->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-center text-muted">No questions found</p>
-                    @endforelse
+        <div class="mt-2">
+            <a href="{{ route('questions.edit', $q->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+            <form action="{{ route('questions.delete', $q->id) }}" method="POST" style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Are you sure?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+@empty
+    <p class="text-center text-muted">No questions found</p>
+@endforelse
+
                 </div>
             </div>
 
         </div>
     </div>
 
-    {{-- JS show/hide answer type --}}
-    <script>
-        let answerType = document.getElementById('answerType');
-        let textAnswer = document.getElementById('textAnswer');
-        let optionAnswer = document.getElementById('optionAnswer');
+  
+   <script>
+let answerType = document.getElementById('answerType');
+let optionAnswer = document.getElementById('optionAnswer');
+let addMore = document.getElementById('addMore');
+let optionsWrapper = document.getElementById('optionsWrapper');
 
-        answerType.addEventListener('change', function () {
-            textAnswer.style.display = (this.value === 'text') ? 'block' : 'none';
-            optionAnswer.style.display = (this.value === 'options') ? 'block' : 'none';
-        });
+answerType.addEventListener('change', function () {
+    optionAnswer.style.display = (this.value === 'options') ? 'block' : 'none';
+});
 
-        // Page load: pre-select show/hide
-        let selectedType = answerType.value;
-        textAnswer.style.display = (selectedType === 'text') ? 'block' : 'none';
-        optionAnswer.style.display = (selectedType === 'options') ? 'block' : 'none';
-    </script>
+addMore.addEventListener('click', function () {
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'form-control mb-2';
+    input.placeholder = 'Option';
+    optionsWrapper.appendChild(input);
+});
+</script>
+
 </x-admin>

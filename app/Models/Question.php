@@ -8,16 +8,11 @@ use App\Models\Answer;
 
 class Question extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'category_id',
         'question',
         'answer_type',
     ];
-
-    public function answers()
-    {
-        return $this->hasMany(Answer::class);
-    }
 }
+
+
