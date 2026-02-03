@@ -9,13 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::table('questions', function (Blueprint $table) {
-        $table->unsignedBigInteger('category_id')->after('id');
-    });
-}
-
+    public function up(): void
+    {
+        Schema::table('questions', function (Blueprint $table) {
+            //
+        });
+    }
 
     /**
      * Reverse the migrations.

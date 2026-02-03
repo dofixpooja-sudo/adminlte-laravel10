@@ -4,35 +4,49 @@ use App\Http\Controllers\LoginWithOTPController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+Route::get('/admin/subcategory/{subcategoryId}/questions', [QuestionController::class, 'index'])
+    ->name('admin.questions.index');
 
-// Show edit form
-Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
-    ->name('questions.edit');
-
-// Update question
-Route::put('/questions/{id}', [QuestionController::class, 'update'])
-    ->name('questions.update');
-
-// Show questions for a category
-Route::get('/admin/category/{categoryId}/questions', [QuestionController::class, 'index'])
-     ->name('admin.questions.index');
-
-// Add question
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 
-// Edit question
-Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
-    ->name('questions.edit');
+Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
 
-// Update question
-Route::put('/questions/{id}', [QuestionController::class, 'update'])
-    ->name('questions.update');
+Route::put('/questions/{id}', [QuestionController::class, 'update'])->name('questions.update');
 
-// Delete question
-Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])
-    ->name('questions.delete');
+Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.delete');
+Route::post('/admin/category/{id}/toggle-status', [CategoryController::class, 'toggleStatus'])
+    ->name('admin.category.toggleStatus');
+
+
+// // Show edit form
+// Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
+//     ->name('questions.edit');
+
+// // Update question
+// Route::put('/questions/{id}', [QuestionController::class, 'update'])
+//     ->name('questions.update');
+
+// // Show questions for a category
+// Route::get('/admin/subcategory/{subcategoryId}/questions', [QuestionController::class, 'index'])
+//      ->name('admin.questions.index');
+
+// // Add question
+// Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+
+// // Edit question
+// Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
+//     ->name('questions.edit');
+
+// // Update question
+// Route::put('/questions/{id}', [QuestionController::class, 'update'])
+//     ->name('questions.update');
+
+// // Delete question
+// Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])
+//     ->name('questions.delete');
 
 
 // -------------------- HOME / ABOUT --------------------

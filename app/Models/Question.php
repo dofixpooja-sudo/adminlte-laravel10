@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+// app/Models/Question.php
+
+namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Answer;
 
 class Question extends Model
 {
-    protected $fillable = [
-        'category_id',
-        'question',
-        'answer_type',
-    ];
+    protected $fillable = ['subcategory_id','question','answer_type'];
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }
 
 

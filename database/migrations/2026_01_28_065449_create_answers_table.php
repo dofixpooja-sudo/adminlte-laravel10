@@ -11,13 +11,13 @@ return new class extends Migration
      */
  public function up()
 {
-    Schema::create('answers', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('question_id');
-        $table->text('answer')->nullable();
-        $table->boolean('is_correct')->default(false);
-        $table->timestamps();
-    });
+   Schema::create('answers', function (Blueprint $table) {
+    $table->id();
+    $table->unsignedBigInteger('question_id'); // ✅ Ye hona chahiye
+    $table->string('answer');
+    $table->timestamps();
+});
+
 }
 
 

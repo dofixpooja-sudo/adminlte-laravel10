@@ -24,10 +24,11 @@ class UserSeeder extends Seeder
             'password' => bcrypt('p$ssw#rd'),
         ])->assignRole('user');
 
-        \App\Models\User::factory()->create([
+     \App\Models\User::factory()->create([
             'name' => 'User',
             'email' => 'testvendor@gmail.com',
             'password' => bcrypt('p$ssw#rd'),
         ])->assignRole('vendor');
+        
     }
 }

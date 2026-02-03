@@ -5,6 +5,7 @@
             <div class="card">
                 <div class="card-primary">
                     <div class="card-header">
+                        
                         <h3 class="card-title">Create Category</h3>
                         <div class="card-tools">
                             <a href="{{ route('admin.category.index') }}" class="btn btn-info btn-sm">Back</a>

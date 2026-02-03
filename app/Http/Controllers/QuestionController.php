@@ -7,59 +7,60 @@ use App\Models\Question;
 
 class QuestionController extends Controller
 {
-    public function index($categoryId)
+    public function index($subcategoryId)
     {
-        $questions = Question::where('category_id', $categoryId)->latest()->get();
-        return view('admin.category.questions', compact('questions','categoryId'));
+        $questions = Question::where('subcategory_id', $subcategoryId)
+            ->latest()
+            ->get();
+
+        return view('admin.subcategory.questions',
+            compact('questions','subcategoryId'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'question'    => 'required|string',
-            'category_id' => 'required',
+            'question' => 'required|string',
+            'subcategory_id' => 'required',
             'answer_type' => 'required|in:text,options',
         ]);
 
         Question::create([
-            'question'    => $request->question,
-            'category_id' => $request->category_id,
+            'question' => $request->question,
+            'subcategory_id' => $request->subcategory_id,
             'answer_type' => $request->answer_type,
         ]);
 
         return redirect()
-            ->route('admin.questions.index', $request->category_id)
+            ->route('admin.questions.index', $request->subcategory_id)
             ->with('success', 'Question added successfully');
     }
 
     public function edit($id)
     {
         $question = Question::findOrFail($id);
-        return view('admin.category.update-question', compact('question'));
+        return view('admin.subcategory.update-question', compact('question'));
     }
 
-   public function update(Request $request, $id)
-{
-    $request->validate([
-        'question'    => 'required|string',
-        'answer_type' => 'required|in:text,options',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'question' => 'required|string',
+            'answer_type' => 'required|in:text,options',
+        ]);
 
-    $question = Question::findOrFail($id);
+        Question::findOrFail($id)->update([
+            'question' => $request->question,
+            'answer_type' => $request->answer_type,
+        ]);
 
-    $question->update([
-        'question'    => $request->question,
-        'answer_type' => $request->answer_type,
-    ]);
-
-    return redirect()->route('admin.questions.index', $question->category_id)
-        ->with('success', 'Question updated successfully');
-}
-
+        return redirect()->back()->with('success','Updated');
+    }
 
     public function destroy($id)
     {
         Question::findOrFail($id)->delete();
-        return redirect()->back()->with('success','Question deleted successfully.');
+        return back()->with('success','Deleted');
     }
 }
+

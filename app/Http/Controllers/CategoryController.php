@@ -78,9 +78,32 @@ return redirect()->route('admin.category.index')
         return redirect()->route('admin.category.index')->with('info','Category updated successfully.');   
     }
 
+    public function show($id)
+    {
+        print_r($id);
+        die;
+        Category::where('id',decrypt($id))->get();
+        return redirect()->route('admin.category.index')->with('error','Category deleted successfully.');   
+    }
+
     public function destroy($id)
     {
+        // print_r($id);
+        // die;
         Category::where('id',decrypt($id))->delete();
         return redirect()->route('admin.category.index')->with('error','Category deleted successfully.');   
     }
+  
+public function toggleStatus($id)
+{
+    $category = Category::findOrFail($id);
+    $category->status = !$category->status; // toggle status
+    $category->save();
+
+    return redirect()->route('admin.category.index')->with('success','Category status updated successfully.');
+}
+
+
+
+
 }
