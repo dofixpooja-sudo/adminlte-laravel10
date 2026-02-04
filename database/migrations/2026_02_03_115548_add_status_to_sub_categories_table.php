@@ -9,23 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
- public function up()
+  public function up()
 {
-   Schema::create('answers', function (Blueprint $table) {
-    $table->id();
-    $table->unsignedBigInteger('question_id'); 
-    $table->string('answer');
-    $table->timestamps();
-});
-
+    Schema::table('sub_categories', function (Blueprint $table) {
+        $table->tinyInteger('status')->default(1);
+    });
 }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::table('sub_categories', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -103,4 +103,19 @@ class SubCateoryController extends Controller
         SubCategory::where('id',decrypt($id))->delete();
         return redirect()->route('admin.subcategory.index')->with('error','SubCategory deleted successfully.');   
     }
-}
+     public function show($id)
+    {
+        $subcategory = SubCategory::find($id);
+
+        if (!$subcategory) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Subcategory not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $subcategory
+        ]);
+    }}

@@ -9,9 +9,17 @@ class SubCategoryController extends Controller
 {
     public function categoryWiseSubcategories($category_id)
     {
-        $category = Category::with('subcategories')
-            ->where('status',1)
-            ->find($category_id);
+        $category = Category::with([
+            'subcategories' => function ($q) {
+                $q->select('id','category_id','name','slug')
+                  ->with([
+                      'questions' => function ($q2) {
+                          $q2->select('id','subcategory_id','question','answer_type')
+                             ->with('answers:id,question_id,answer');
+                      }
+                  ]);
+            }
+        ])->find($category_id);
 
         if (!$category) {
             return response()->json([
