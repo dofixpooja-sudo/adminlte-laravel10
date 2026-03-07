@@ -1,4 +1,6 @@
 <x-admin>
-    @section('title','Dashboard')
-    <x-dashboard />
+@section('title','Dashboard')
+
+@include('components.dashboard')
+
 </x-admin>

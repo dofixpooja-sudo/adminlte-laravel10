@@ -12,9 +12,15 @@ class Question extends Model
         'answer_type'
     ];
 
-    public function answers()
-    {
-        return $this->hasMany(Answer::class);
-    }
+  public function answers()
+{
+    return $this->hasMany(Answer::class);
+}
+
+public function option()
+{
+    return $this->hasMany(Option::class,'question_id');
+}
+
 }
 

@@ -3,20 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\SubCategoryController;
 
-
+use App\Http\Controllers\Api\OptionController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     return $request->user();
@@ -41,5 +31,9 @@ Route::get(
 // // );
 //    Route::get('/subcategories/{id}', [SubCategoryController::class, 'show']);
 
-
-
+Route::post('/submit-answer', [AnswerController::class, 'store']);
+Route::get('/answers', [AnswerController::class, 'index']);
+Route::get('/answers-list', [AnswerController::class, 'answersList']);
+Route::put('/update-answer/{id}', [AnswerController::class,'update']);
+Route::delete('/delete-answer/{id}', [AnswerController::class,'delete']);
+Route::post('/options/create', [OptionController::class, 'store']);

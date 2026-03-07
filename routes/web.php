@@ -6,7 +6,16 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Api\AnswerController;
+Route::get('/admin/answer', [AnswerController::class, 'answersList'])->name('admin.answer.index');
+
+Route::get('/admin/answer/{id}/edit', [AnswerController::class, 'edit'])->name('admin.answer.edit');
+
+Route::put('/admin/answer/{id}', [AnswerController::class, 'update'])->name('admin.answer.update');
+
+Route::delete('/admin/answer/{id}', [AnswerController::class, 'destroy'])->name('admin.answer.destroy');
 Route::get('/admin/subcategory/{subcategoryId}/questions', [QuestionController::class, 'index'])
     ->name('admin.questions.index');
 
@@ -20,7 +29,7 @@ Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('
 Route::post('/admin/category/{id}/toggle-status', [CategoryController::class, 'toggleStatus'])
     ->name('admin.category.toggleStatus');
 
-
+Route::get('/dashboard',[ProfileController::class,'dashboard'])->name('dashboard');
 // // Show edit form
 // Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])
 //     ->name('questions.edit');

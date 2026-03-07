@@ -9,16 +9,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use App\Models\Answer;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Collection;
 class ProfileController extends Controller
 {
 
-    public function dashboard()
-    {
-        return view('dashboard');
+
+public function dashboard(Request $request)
+{
+    $user = User::count();
+    $category = Category::count();
+    $product = Product::count();
+    $collection = Collection::count();
+
+    $query = \App\Models\Answer::with(['question','option','user']);
+
+    // search by user id
+    if($request->filled('user_id')){
+        $query->where('user_id', $request->user_id);
     }
+
+    $answers = $query->orderBy('created_at','desc')->get();
+
+    return view('dashboard', compact('user','category','product','collection','answers'));
+}
     /**
-     * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
