@@ -2,11 +2,18 @@
 
 @section('title','Edit Answer')
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-6 col-md-8 col-12">
 
 <div class="card">
-<div class="card-header">
-Edit Answer
+
+<div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+
+<h5 class="mb-0">Edit Answer</h5>
+
 </div>
 
 <div class="card-body">
@@ -18,13 +25,20 @@ Edit Answer
 
 @if($answer->answer_type == 'text')
 
+<div class="form-group mb-3">
+
 <label>Answer</label>
+
 <input type="text"
 name="answer_text"
 class="form-control"
 value="{{ $answer->answer_text }}">
 
+</div>
+
 @else
+
+<div class="form-group mb-3">
 
 <label>Select Option</label>
 
@@ -43,19 +57,35 @@ value="{{ $answer->answer_text }}">
 
 </select>
 
+</div>
+
 @endif
 
-<button class="btn btn-success mt-3">
+
+<div class="d-flex flex-wrap gap-2">
+
+<button class="btn btn-success btn-sm">
+
 Update
+
 </button>
 
-<a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">
+<a href="{{ route('dashboard') }}" class="btn btn-secondary btn-sm">
+
 Back
+
 </a>
+
+</div>
 
 </form>
 
 </div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
